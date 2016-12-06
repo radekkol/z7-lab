@@ -36,10 +36,12 @@ function ShowForm($komunikat=""){	//funkcja wyœwietlaj¹ca formularz rejestracyjn
 
 if($_POST["send"]==1){	//sprawdzanie czy formularz zosta³ wys³any
 	if(!empty($_POST["login"]) && !empty($_POST["haslo"])){	//oraz czy uzupe³niono wszystkie dane
+		$user = $_POST["login"];
 		if(mysql_num_rows(mysql_query("SELECT * from users where user='".htmlspecialchars($_POST["login"]."'"))))ShowForm("Uzytkownik o podanym loginie juz istnieje!!!"); // sprawdzanie czy u¿ytkownik o podanej nazwie ju¿ istnieje
 		else{
 			mysql_query("INSERT into users values('', '".htmlspecialchars($_POST["login"])."', '".htmlspecialchars($_POST['haslo'])."',0)"); // zapisywanie rekordu do bazy
 			echo "Rejestracja przebiegla pomyslnie. Mozesz teraz przejsc do <a href='index.php'>strony glownej</a> i sie zalogowac.";
+			mkdir ("./$user", 0777);
 			}
 	}
 	else ShowForm("Nie uzupelniono wszystkich pol!!!");
